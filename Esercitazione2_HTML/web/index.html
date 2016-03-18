@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Registrazione Esami Triennale & Magistrale</h1>
+        <img src="img/unica_logo.png" title="Logo Unica" 
+             alt="Logo Unica"
+             width="150" height="150">
+        
+        
+        <form method="POST">   
+        
+        <!-- Nome, cognome, matricola studente -->
+        <div>
+        <label for="NomeStudente">Nome Studente</label>
+        <input type="text" name="NomeStudente" id="NomeStudente" />
+        <label for="CognomeStudente">Cognome Studente</label>
+        <input type="text" name="CognomeStudente" id="CognomeStudente" />
+        <label for="MatricolaStudente">Matricola Studente</label>
+        <input type="number" name="MatricolaStudente" id="MatricolaStudente" />
+        </div>
+        
+        <!-- Nome esame e voto -->
+        <div>
+        <label for="NomeEsame">Nome Esame</label>
+        <select size="3" name="NomeEsame" id="NomeEsame">
+            <option value="PR1">Programmazione 1</option>
+            <option value="AMM">Amministrazione di Sistema</option>
+            <option value="RC">Reti di Calcolatori</option>
+            <option value="EAI">Elaborazione d'Immagini</option>
+            <option value="FS">Fondamenti d'Informatica</option>
+            <option value="CR">Computazione su Rete</option>
+        </select>
+        <label for="VotoEsame">Voto Esame</label>
+        <input type="range" min="18" max="31"
+               name="VotoEsame" id="VotoEsame" />
+        </div>
+        <!-- Descrizione -->
+        <div>
+        <label for="Descrizione">Descrizione</label>
+        <textarea name="Descrizione" id="Descrizione"
+                  rows="10" cols="40">Descrizione Esame</textarea>
+        </div>
+        
+        <!-- Submit Reset -->
+        <div>
+            <input type="submit" value="Invia"/>
+            <input type="reset" value="Reimposta"/>
+        </div>
+        </form>
+    </body>
+</html>
