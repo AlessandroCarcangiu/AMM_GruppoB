@@ -1,0 +1,41 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23-mar-2016, 15.28.52
+    Author     : Alessandro
+*/
+
+/*
+Nel CSS, impostare il font per l'elemento body con i seguenti parametri:
+Grandezza 14 pixel
+Carattere 'Open Sans'
+In caso il browser non abbia il font precedente, impostare Arial
+Nel caso il browser non abbia il font precedente, impostare sans-serif
+Colore nero
+*/
+body
+{
+    font-size: 14px;
+    font-family: "Open Sans", Arial, sans-serif;
+    color: black;
+}
+
+/*
+Impostare il colore di sfondo per l'elemento con id logo con il seguente valore esadecimale #1c345a.
+Impostare il colore del testo per l'elemento con id header a bianco. 
+Ripetere la stessa operazione con l'elemento avente id footer.
+Combinare il selettore scritto per l'elemento con id header e quello con id footer in una regola unica. 
+*/
+#logo
+{
+    background-color: #1c345a;
+}
+#header, #footer
+{
+    color:white;
+}
+
+
