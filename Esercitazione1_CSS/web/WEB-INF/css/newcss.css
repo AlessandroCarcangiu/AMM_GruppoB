@@ -88,9 +88,25 @@ a[href="studente_esami.html"]:link{
     color:#1c345a;
 }
 
-
-
-
-
-
-
+/* 
+Vogliamo fare in modo che il titolo della pagina mostri il logo dell'Università alla sinistra del testo. Solo 
+che, essendo semplicemente un'immagine decorativa che non aggiunge informazione al titolo, non vogliamo 
+utilizzare il tag img. Questo è un consiglio generale: non inserite le immagini puramente decorative nel 
+markup. Potreste sempre eliminarle su un altro CSS, senza dover modificare la vostra pagina.
+Per far ciò, impostiamo l'immagine di sfondo per il tag h1 all'interno del div con id logo. Salvate in locale 
+l'immagine http://spano.sc.unica.it/davide/esami/images/logo.jpg ed impostate gli attributi corrispondenti 
+alle seguenti descrizioni:
+immagine di sfondo: l'immagine che avete salvato
+nessuna ripetizione dello sfondo
+immagine di sfondo centrata verticalmente
+immagine di sfondo posizionata a sinistra orizzontalmente
+A questo punto l'immagine risulterà sovrapposta al testo. Per evitare questo, impostate il padding del box 
+relativo in modo che non si sovrappongano.
+*/
+div h1#logo
+{
+    background-image: url('../image/logo.jpg');
+    background-repeat: no-repeat;
+    /*background-position: top center;*/
+    /*background-position: left center;*/
+}

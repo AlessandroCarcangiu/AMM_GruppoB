@@ -1,0 +1,46 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 30-mar-2016, 17.10.56
+    Author     : Alessandro
+*/
+#div1
+{
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    background-color: green;        
+}
+
+#div2
+{
+    position: absolute;
+    width: 96%;
+    height: 220px;
+    background-color: red;
+    top: 210px;
+    left: 2%;
+}
+
+ #div3
+ {
+     position: absolute;
+     width: 48%;
+     height: 100px;
+     background-color: blue;
+     top: 440px;
+     left: 2%;
+ }
+ 
+ #div4
+ {
+     position: absolute;
+     width: 48%;
+     height: 100px;
+     background: grey;
+     top: 440px;
+     right: 2%;
+ }
