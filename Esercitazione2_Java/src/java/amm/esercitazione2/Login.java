@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,6 +38,8 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        HttpSession session = request.getSession(true);
+        
         if(request.getParameter("Submit") != null)
         {
             String username = request.getParameter("Username");
@@ -50,9 +53,13 @@ public class Login extends HttpServlet {
                 if(u.getUsername().equals(username) && 
                         u.getPassword().equals(password))
                 {
+                    session.setAttribute("loggedId", true);
+                    session.setAttribute("id", u.getId());
+                    
                     if(u instanceof Professore)
                     {
                         request.setAttribute("professore", u);
+                        
                         request.getRequestDispatcher("professore_autenticato.jsp")
                                 .forward(request, response);
                     }

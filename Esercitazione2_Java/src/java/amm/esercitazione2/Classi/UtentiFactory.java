@@ -12,32 +12,36 @@ import java.util.ArrayList;
  * @author Alessandro
  */
 public class UtentiFactory {
-
+    // Attributi
     private static UtentiFactory singleton;
-
     public static UtentiFactory getInstance() {
         if (singleton == null) {
             singleton = new UtentiFactory();
         }
         return singleton;
     }
-
+    // Lista Materie
+    private ArrayList<Materia> listaMaterie = new ArrayList<Materia>();
+    // Lista Professori
+    private ArrayList<Utente> listaProfessori = new ArrayList<Utente>();
+    // Lista Studenti
+    private ArrayList<Utente> listaStudenti = new ArrayList<Utente>();
+    
     /* Costruttore */
     private UtentiFactory() {
-
-    }
-
-    public ArrayList<Utente> getUserList() {
-        ArrayList<Utente> listaUtenti = new ArrayList<Utente>();
+              
         // Materie         
         Materia materia_1 = new Materia();
         materia_1.setNome("AMM");
+        listaMaterie.add(materia_1);
         Materia materia_2 = new Materia();
         materia_2.setNome("IUM");
+        listaMaterie.add(materia_2);
         Materia materia_3 = new Materia();
         materia_3.setNome("PR1");
-
-        // Professore 1
+        listaMaterie.add(materia_3);
+        
+                // Professore 1
         Professore prof_1 = new Professore();
         prof_1.setUsername("SpanoDavide");
         prof_1.setPassword("0");
@@ -48,8 +52,7 @@ public class UtentiFactory {
         arrayMaterieProf_1.add(materia_1);
         arrayMaterieProf_1.add(materia_2);
         prof_1.setCorsiAssegnati(arrayMaterieProf_1);
-        listaUtenti.add(prof_1);
-
+        listaProfessori.add(prof_1);
         // Professore 2
         Professore prof_2 = new Professore();
         prof_2.setUsername("ScateniRiccardo");
@@ -60,8 +63,8 @@ public class UtentiFactory {
         ArrayList<Materia> arrayMaterieProf_2 = new ArrayList<Materia>();
         arrayMaterieProf_2.add(materia_3);
         prof_2.setCorsiAssegnati(arrayMaterieProf_2);
-        listaUtenti.add(prof_2);
-
+        listaProfessori.add(prof_2);
+        
         // Studente 1
         Studente studente_1 = new Studente();
         studente_1.setUsername("CarcangiuAlessandro");
@@ -71,17 +74,16 @@ public class UtentiFactory {
         studente_1.setId(2);
         // Esami
         Esame esame_1 = new Esame();
-        //esame_1.setMateriaId("AMM");
+        esame_1.setMateria(materia_1);
         esame_1.setVoto(28);
         Esame esame_2 = new Esame();
-        //esame_2.setMateriaId("IUM");
+        esame_2.setMateria(materia_2);
         esame_2.setVoto(30);
         ArrayList<Esame> arrayEsamiStudente_1 = new ArrayList<Esame>();
         arrayEsamiStudente_1.add(esame_1);
         arrayEsamiStudente_1.add(esame_2);
         studente_1.setEsamiSuperati(arrayEsamiStudente_1);
-        listaUtenti.add(studente_1);
-
+        listaStudenti.add(studente_1);
         // Studente 2
         Studente studente_2 = new Studente();
         studente_2.setUsername("CherchiGianmarco");
@@ -91,15 +93,53 @@ public class UtentiFactory {
         studente_2.setId(3);
         // Esami
         Esame esame_3 = new Esame();
-        //esame_3.setMateriaId("PR1");
+        esame_3.setMateria(materia_1);
         esame_3.setVoto(30);
         Esame esame_4 = new Esame();
-        //esame_4.setMateriaId("IUM");
+        esame_4.setMateria(materia_3);
         esame_4.setVoto(30);
         ArrayList<Esame> arrayEsamiStudente_2 = new ArrayList<Esame>();
         arrayEsamiStudente_2.add(esame_3);
         arrayEsamiStudente_2.add(esame_4);
         studente_2.setEsamiSuperati(arrayEsamiStudente_2);
+        listaStudenti.add(studente_2);
+    }
+    
+    /* Metodi */
+    public ArrayList<Utente> getProfessoreList()
+    {
+        return listaProfessori;
+    }
+    public Utente getProfessore(int id)
+    {
+        for(Utente u : listaProfessori)
+        {
+            if(u.id == id)
+                return u;
+        }
+        
+        return null;
+    }
+    public ArrayList<Utente> getStudenteList()
+    {
+        return listaStudenti;
+    }
+    public Utente getStudente(int id)
+    {
+        for(Utente u : listaStudenti)
+        {
+            if(u.id == id)
+                return u;
+        }
+        
+        return null;
+    }
+    public ArrayList<Utente> getUserList() 
+    {
+        ArrayList<Utente> listaUtenti = new ArrayList<Utente>();
+        
+        listaUtenti.addAll(listaProfessori);
+        listaUtenti.addAll(listaStudenti);
         
         return listaUtenti;
     }
