@@ -5,12 +5,9 @@
  */
 package amm.esercitazione2;
 
-import amm.esercitazione2.Classi.Professore;
-import amm.esercitazione2.Classi.Utente;
 import amm.esercitazione2.Classi.UtentiFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +19,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Alessandro
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "Registra", urlPatterns = {"/Registra"})
+public class Registra extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,49 +33,20 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
         
-        if(request.getParameter("Submit") != null)
-        {
-            String username = request.getParameter("Username");
-            String password = request.getParameter("Password");
-            
-            ArrayList<Utente> listaUtenti = UtentiFactory.getInstance()
-                    .getUserList();
-            
-            for(Utente u : listaUtenti)
-            {
-                if(u.getUsername().equals(username) && 
-                        u.getPassword().equals(password))
-                {
-                    session.setAttribute("loggedId", true);
-                    session.setAttribute("id", u.getId());
-                    
-                    if(u instanceof Professore)
-                    {
-                        request.setAttribute("professore", u);
-                        request.setAttribute("alunni", UtentiFactory
-                                .getInstance().getStudenteList());
-                                
-                        request.getRequestDispatcher("professore_autenticato.jsp")
-                                .forward(request, response);
-                    }
-                    else
-                    {
-                        request.setAttribute("studente", u);
-                        request.getRequestDispatcher("studente_autenticato.jsp")
-                                .forward(request, response);
-                    }
-                }
-            }
-            
-        }
-        request.getRequestDispatcher("form_login.jsp")
+        request.setAttribute("professore", UtentiFactory.getInstance()
+                .getProfessore((int)session.getAttribute("id")));
+        
+        int idAlunno = Integer.parseInt(request.getParameter("idAlunno"));
+        request.setAttribute("alunno", UtentiFactory.getInstance()
+                .getStudente(idAlunno));
+        
+        request.getRequestDispatcher("form_registra.jsp")
                 .forward(request, response);
-        
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

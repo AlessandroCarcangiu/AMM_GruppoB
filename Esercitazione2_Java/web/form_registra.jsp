@@ -1,11 +1,11 @@
 <%-- 
-    Document   : professore_autenticato
-    Created on : 15-apr-2016, 11.53.21
+    Document   : form_registra
+    Created on : 22-apr-2016, 11.33.50
     Author     : Alessandro
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -76,37 +76,48 @@
             <!-- contenuto -->
             <div id="content">
                 <div class="input-form">
-                    <h3>Bentornato ${professore.nome} 
-                        ${professore.cognome}</h3>
-                    
+                    <h3>Registrazione Esame</h3>
+                    <form action="Registra" method="GET">
+                        <!-- Nome, Cognome e Matricola Studente -->
                         <div>
-                            Id: ${professore.id}
-                        </div>
-                        <div>
-                            Corsi insegnati:
-                            <ul>
-                                <c:forEach var="materia" 
-                                           items="${professore.corsiAssegnati}">
-                                    
-                                    <li>${materia.nome}</li>
-                                </c:forEach>
-                            </ul>
-                        </div>
-                        
-                        <div>
-                            <h3>Registrazione Esami</h3>
+                            <label>${alunno.nome} ${alunno.cognome} 
+                                Matricola: ${alunno.id}
+                            </label>
+                                                       
+                            <input type="hidden" name="Matricola" id="Matricola"
+                                   value="${alunno.id}"/>       
                             
-                            <ul>
-                                <c:forEach var="alunno" items="${alunni}" >
-                                    <li>${alunno.nome} ${alunno.cognome}
-                                        <a href="Registra?idAlunno=${alunno.id}">
-                                        Registra esame
-                                        </a>
-                                    </li>
-                                </c:forEach>    
-                            </ul>
                         </div>
-                    
+
+                        <!-- Lista esami e voto -->
+                        <div>
+                            <label for="ListaEsami">Lista Esami</label>
+                            <select name="ListaEsami" id="ListaEsami">
+                                <c:forEach var="materia" items="${professore.corsiAssegnati}">
+                                    <option value="${materia.nome}">
+                                        ${materia.nome}
+                                    </option>
+                                </c:forEach>
+                            </select>
+
+                            <label for="voto">Voto</label>
+                            <input type="range" min="18" max="31"
+                                   name="voto" id="voto">
+                        </div>
+
+                        <!-- Descrizione -->
+                        <div>
+                            <label for="Descrizione">Descrizione</label>
+                            <textarea name="Descrizione" id="Descrizione"
+                                      cols="40" rows="10" >Descrizione Esame</textarea>
+                        </div>
+
+                        <!-- Pulsanti submit e reset -->
+                        <div>
+                            <input type="submit" name="submit" value="Invia">
+                            <input type="reset" name="reset" value="Cancella">
+                        </div>           
+                    </form>
                 </div>
             </div>
 
