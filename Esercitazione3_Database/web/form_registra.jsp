@@ -95,7 +95,7 @@ and open the template in the editor.
                 <label for="ListaEsami">Lista Esami</label>
                 <select name="listaEsami" id="ListaEsami">
                     <c:forEach var="materia" items="${professore.corsiAssegnati}">
-                        <option value="${materia.nome}">${materia.nome}</option>
+                        <option value="${materia.id}">${materia.nome}</option>
                     </c:forEach>
                 </select>
                 

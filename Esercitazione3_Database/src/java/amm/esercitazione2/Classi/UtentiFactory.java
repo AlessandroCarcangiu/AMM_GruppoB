@@ -37,7 +37,92 @@ public class UtentiFactory {
 
     }
     
-    /* Metodi */            
+    /* Metodi */  
+        public Utente getUtente(String username, String password)
+    {
+        try
+        {
+            Connection conn = DriverManager
+                    .getConnection(connectionString, 
+                            "alessandrocarcangiu",
+                            "0000");
+            // sql command
+            String query = "select * from professore where "
+                    + "password = ? and username = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            // dati
+            stmt.setString(1, password);
+            stmt.setString(2, username);
+            //
+            ResultSet set = stmt.executeQuery();
+            
+            if(set.next())
+            {
+                Professore professore = new Professore();
+                professore.id = set.getInt("id");
+                professore.nome = set.getString("nome");
+                professore.cognome = set.getString("cognome");
+                professore.username = set.getString("username");
+                professore.password = set.getString("password");
+                professore.orario_ricevimento = set.
+                        getString("orario_ricevimento");
+                // nuova query, corsiAssegnati
+                query = "select materia.id, materia.nome from materia "
+                        + "join materie_assegnate "
+                        + "on materia.id = materie_assegnate.idMateria "
+                        + "where materie_assegnate.idProfessore="+professore.id;
+                Statement st = conn.createStatement();
+                ResultSet res2 = st.executeQuery(query);
+                while(res2.next())
+                {
+                    Materia m = new Materia();
+                    m.setId(res2.getInt("id"));
+                    m.setNome(res2.getString("nome"));
+                    professore.corsiAssegnati.add(m);
+                }
+                st.close();
+                stmt.close();
+                conn.close();
+                
+                return professore;
+            }
+            
+            // Studente
+            // sql command
+            query = "select * from studente where "
+                    + "password = ? and username = ?";
+            stmt = conn.prepareStatement(query);
+            // dati
+            stmt.setString(1, password);
+            stmt.setString(2, username);
+            //
+            set = stmt.executeQuery();
+            
+            if(set.next())
+            {
+                Studente studente = new Studente();
+                studente.id = set.getInt("id");
+                studente.nome = set.getString("nome");
+                studente.cognome = set.getString("cognome");
+                studente.username = set.getString("username");
+                studente.password = set.getString("password");
+                studente.matricola = set.
+                        getInt("matricola");
+                stmt.close();
+                conn.close();
+                return studente;
+            }
+            
+            stmt.close();
+            conn.close();
+        }
+        catch(SQLException e)
+        {
+            
+        }
+        return null;
+    }
+        
     // Professore
     // Dato un id restituisce il relativo professore (se esiste un professore con quell'id, altrimenti
     // restituisce null).
@@ -279,6 +364,71 @@ public class UtentiFactory {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    public void registrazioneEsame(int idStudente, int idMateria,
+            int voto, String descrizione) throws SQLException
+    {
+        Connection conn = DriverManager.getConnection(
+                UtentiFactory.getInstance().getConnectionString(),
+                "alessandrocarcangiu",
+                "0000");
+        
+        PreparedStatement updatePianodiStudi = null;
+        PreparedStatement updateEsami_superati = null;
+        
+        // Sql 
+        String deletePianodiStudi = "delete from pianodistudi "
+                + "where idMateria = ? "
+                + "and idStudente = ?";
+        String insertEsami_Superati = "insert into esami_superati "
+                + "(idMateria, idStudente, voto, descrizione) "
+                + "values (?,?,?,?)";
+        
+        try
+        {
+           conn.setAutoCommit(false);
+           updatePianodiStudi = conn.
+                   prepareStatement(deletePianodiStudi);
+           updateEsami_superati = conn.
+                   prepareStatement(insertEsami_Superati);
+           
+           // PianodiStudi
+           updatePianodiStudi.setInt(1, idMateria);
+           updatePianodiStudi.setInt(2, idStudente);
+           // Esami_superati
+           updateEsami_superati.setInt(1, idMateria);
+           updateEsami_superati.setInt(2, idStudente);
+           updateEsami_superati.setInt(3, voto);
+           updateEsami_superati.setString(4, descrizione);
+           
+           int c1 = updatePianodiStudi.executeUpdate();
+           int c2 = updateEsami_superati.executeUpdate();
+           
+           if(c1 != 1 || c2 != 1)
+               conn.rollback();
+           
+           conn.commit();           
+        }catch(SQLException e)
+        {
+            try
+            {
+                conn.rollback();
+            }catch(SQLException e2)
+            {
+                
+            }
+        }
+        finally
+        {
+            if(updatePianodiStudi != null)
+                updatePianodiStudi.close();
+            if(updateEsami_superati != null)
+                updateEsami_superati.close();
+            
+            conn.setAutoCommit(true);
+            conn.close();
+        }    
     }
     
     // ConnectionString

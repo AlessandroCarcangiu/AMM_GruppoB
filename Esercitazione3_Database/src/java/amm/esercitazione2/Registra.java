@@ -52,7 +52,7 @@ public class Registra extends HttpServlet {
         {
             // Preleva i dati da registrare
             int idStudente = Integer.parseInt(request.getParameter("alunnoId"));
-            int idMateria = UtentiFactory.getInstance().getMateria(request.getParameter("listaEsami")).getId();
+            int idMateria = Integer.parseInt(request.getParameter("listaEsami"));
             int voto = Integer.parseInt(request.getParameter("voto"));
             String descrizione = request.getParameter("descrizione");
         }              
