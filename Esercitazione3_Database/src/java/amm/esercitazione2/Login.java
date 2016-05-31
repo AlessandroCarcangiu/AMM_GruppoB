@@ -24,8 +24,23 @@ import javax.servlet.http.HttpSession;
  *
  * @author Alessandro
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
+@WebServlet(name = "Login", urlPatterns = {"/Login"}, loadOnStartup = 0)
 public class Login extends HttpServlet{
+    
+    private static final String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+    private static final String DB_CLEAN_PATH = "../../web/WEB-INF/db/ammdb";
+    private static final String DB_BUILD_PATH = "WEB-INF/db/ammdb";
+    @Override 
+    public void init(){
+        String dbConnection = "jdbc:derby:" + this.getServletContext().getRealPath("/") + DB_BUILD_PATH;
+        try {
+            Class.forName(JDBC_DRIVER);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Login.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        UtentiFactory.getInstance().setConnectionString(dbConnection);
+    }
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
