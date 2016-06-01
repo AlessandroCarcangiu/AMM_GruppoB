@@ -21,7 +21,7 @@ and open the template in the editor.
         <link href="css/responsive.css" rel="stylesheet" type="text/css" media="screen">
 
         <!-- jQuery -->
-        <script type="text/javascript" src="lib/jquery-2.2.4.min.js"></script>
+        <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
         <script type="text/javascript" src="js/javascript1.js"></script>
         
         <style type="text/css"></style>
